@@ -22,10 +22,7 @@ class Todolist extends Component {
         url: 'http://engine-staging.viame.ae/assessment/list',
         method: 'get',
         headers: {
-            'x-access-token' : token_var.token,
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin' : origin,
-            'Access-Control-Allow-Credentials' : 'true'
+            'x-access-token' : token_var.token
         }
      })
      .then(response => {
