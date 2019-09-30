@@ -1,0 +1,26 @@
+.App-logo {
+  max-width: 20% !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.linkBtn{
+  margin-left:5px;
+}
+
+.registerForm{
+  margin-bottom: 1rem;
+}
+
+#successRegister,
+#faildRegister{
+  display: none;
+}
+
+#successRegister.active,
+#faildRegister.active{
+  display: block;
+}

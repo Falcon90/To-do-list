@@ -1,0 +1,6 @@
+.toolbar button:nth-child(2n){
+    margin-left:10px;
+}
+.toolbar{
+    margin-bottom: 10px;
+}
