@@ -86,13 +86,13 @@ class Todolist extends Component {
 render(){
     const activities = this.state.activities;
     const activitiesList = activities.map((activity) => {
-        if(activity.status == 1){
+        if(activity.status === 1){
             activity.Textstatus = "Created.";
-        }else if(activity.status == 2){
+        }else if(activity.status === 2){
             activity.Textstatus = "Working.";
-        }else if(activity.status == 3){
+        }else if(activity.status === 3){
             activity.Textstatus = "Finished.";
-        }else if(activity.status == 4){
+        }else if(activity.status === 4){
             activity.Textstatus = "Cancelled.";
         }else{
             activity.Textstatus = "Created.";
@@ -103,12 +103,14 @@ render(){
                 <td>{activity.description}</td>
                 <td>{activity.Textstatus}</td>
                 <td>
+                <ButtonGroup>
                 <DropdownButton title="Actions" id="bg-nested-dropdown">
                     <Dropdown.Item eventKey="1">Finished</Dropdown.Item>
                     <Dropdown.Item eventKey="2">Working</Dropdown.Item>
                     <Dropdown.Item eventKey="3">Cancel task</Dropdown.Item>
                     <Dropdown.Item eventKey="4">Delete</Dropdown.Item>
                 </DropdownButton>
+                </ButtonGroup>
                 </td>
             </tr>
         )
