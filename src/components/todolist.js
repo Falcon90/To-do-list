@@ -38,51 +38,56 @@ class Todolist extends Component {
 
     }
 
-    handleRegister = (e) => {
-        this.setState({
-            success : "",
-            error: ""
-        })
-        e.preventDefault();
-        axios.post(`https://engine-staging.viame.ae/assessment/users`, {users: {email: this.state.name, password: this.state.pass}})
-        .then(res => {
-            console.log(res);
-            this.setState({
-                success : "active",
-                error: ""
+    
+
+    changeStatus = (new_status, activity_id, activity_title, activity_description) => {
+        var action = "";
+        if(parseInt(new_status) === 20){
+            action = "DELETE";
+        }else{
+            action = "PUT";
+        }
+        axios({
+            url: 'https://engine-staging.viame.ae/assessment/user/task/'+activity_id,
+            data: { todolist: {title: activity_title, description: activity_description, status: parseInt(new_status)} },
+            method: action,
+            headers: {
+                'x-access-token' : this.state.token
+            }
+        }).then(response => {
+            var temp_activities = this.state.activities;
+            if(parseInt(new_status) !== 20){
+            temp_activities.map((activity) => {
+                if(activity._id === activity_id){
+                    activity.status = parseInt(new_status);
+                    if(parseInt(new_status) === 1){
+                        activity.Textstatus = "Created.";
+                    }else if(parseInt(new_status) === 2){
+                        activity.Textstatus = "Working.";
+                    }else if(parseInt(new_status) === 3){
+                        activity.Textstatus = "Finished.";
+                    }else if(parseInt(new_status) === 4){
+                        activity.Textstatus = "Cancelled.";
+                    }else{
+                        activity.Textstatus = "Created.";
+                    }
+                }
             })
-        }).catch(error => {
-            console.log(error.response);
+            }else if(parseInt(new_status) === 20){
+                temp_activities = temp_activities.filter(function(activity){
+                    return activity._id !== activity_id;
+                });
+            }
+            console.log(temp_activities);
             this.setState({
-                success : "",
-                error: "active"
+                activities: temp_activities
             })
+        }).catch(err => {
+            console.log(err);
         });
-        /*
-        axios.get("https://engine-staging.viame.ae/assessment/users").then(res => {
-            console.log(res.data);
-            this.setState({
-                users: res.data
-            })
-        })
-        */
     }
 
-    changeName = (e) => {
-        this.setState({
-            name : e.target.value
-        })
-    }
-
-    changePass = (e) => {
-        this.setState({
-            pass : e.target.value
-        })
-    }
-
-
-
-
+    
 render(){
     const activities = this.state.activities;
     const activitiesList = activities.map((activity) => {
@@ -104,11 +109,11 @@ render(){
                 <td>{activity.Textstatus}</td>
                 <td>
                 <ButtonGroup>
-                <DropdownButton title="Actions" id="bg-nested-dropdown">
-                    <Dropdown.Item eventKey="1">Finished</Dropdown.Item>
+                <DropdownButton title="Actions" id="bg-nested-dropdown" onSelect={(new_status) => {this.changeStatus(new_status, activity._id,activity.title,activity.description)}}> 
+                    <Dropdown.Item eventKey="3">Finished</Dropdown.Item>
                     <Dropdown.Item eventKey="2">Working</Dropdown.Item>
-                    <Dropdown.Item eventKey="3">Cancel task</Dropdown.Item>
-                    <Dropdown.Item eventKey="4">Delete</Dropdown.Item>
+                    <Dropdown.Item eventKey="4">Cancel task</Dropdown.Item>
+                    <Dropdown.Item eventKey="20">Delete</Dropdown.Item>
                 </DropdownButton>
                 </ButtonGroup>
                 </td>
