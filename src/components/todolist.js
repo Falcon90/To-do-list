@@ -6,13 +6,38 @@ import axios from 'axios';
 
 class Todolist extends Component {
 
+    constructor(){
+        super();
+        if(!this.isAuthenticated()){
+            
+        }
+    }
+
     state = {
         name : "",
         token : "",
         activities : []
     }
 
+    isAuthenticated(){
+        const token = localStorage.getItem('token');
+        if(token && token.length > 10){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    logOut(){
+        localStorage.removeItem('token');
+        this.props.history.push({
+            pathname:"/login",
+        });
+    }
+
     componentDidMount(){
+        const token = localStorage.getItem('token');
+        if(token && token.length > 10){
         var token_var = this.props.location.state.key;
         console.log(token_var.token);
         this.setState({
@@ -35,6 +60,11 @@ class Todolist extends Component {
      .catch(err => {
         console.log(err);
      });
+    }else{
+        this.props.history.push({
+            pathname:"/login",
+        });
+    }
 
     }
 
@@ -133,7 +163,7 @@ render(){
                     <div className="row">
                         <div className="col">
                         <ButtonToolbar className="toolbar">
-                            <Button variant="primary">Logout</Button>
+                            <Button variant="primary" onClick={() => {this.logOut()}}>Logout</Button>
                             <Button variant="primary">Add new task</Button>
                         </ButtonToolbar>
                         </div>

@@ -8,6 +8,10 @@ import axios from 'axios';
 
 class Login extends Component{
 
+    constructor(){
+        super();
+    }
+
     state = {
         name : "",
         pass: "",
@@ -37,6 +41,7 @@ class Login extends Component{
                         key: res.data
                     }
                 });
+                localStorage.setItem('token', res.data);
             } 
         })
     }
