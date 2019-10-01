@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import logo from '../blue-logo.53ec088f.png';
 import './todolist.css';
-import { Button, ButtonToolbar, Table } from 'react-bootstrap';
+import { Button, ButtonToolbar, Table, DropdownButton, Dropdown, ButtonGroup } from 'react-bootstrap';
 import axios from 'axios';
 
 class Todolist extends Component {
 
     state = {
         name : "",
-        token : ""
+        token : "",
+        activities : []
     }
 
     componentDidMount(){
@@ -19,14 +20,17 @@ class Todolist extends Component {
         })
 
        axios({
-        url: 'http://engine-staging.viame.ae/assessment/list',
-        method: 'get',
-        headers: {
-            'x-access-token' : token_var.token
-        }
-     })
+            url: 'https://engine-staging.viame.ae/assessment/user/list',
+            method: 'get',
+            headers: {
+                'x-access-token' : token_var.token
+            }
+        })
      .then(response => {
-        console.log(response)
+        this.setState({
+            activities: response.data
+        })
+        console.log(this.state.activities)
      }) 
      .catch(err => {
         console.log(err);
@@ -80,6 +84,35 @@ class Todolist extends Component {
 
 
 render(){
+    const activities = this.state.activities;
+    const activitiesList = activities.map((activity) => {
+        if(activity.status == 1){
+            activity.Textstatus = "Created.";
+        }else if(activity.status == 2){
+            activity.Textstatus = "Working.";
+        }else if(activity.status == 3){
+            activity.Textstatus = "Finished.";
+        }else if(activity.status == 4){
+            activity.Textstatus = "Cancelled.";
+        }else{
+            activity.Textstatus = "Created.";
+        }
+        return(
+            <tr key={activity._id}> 
+                <td>{activity.title}</td>
+                <td>{activity.description}</td>
+                <td>{activity.Textstatus}</td>
+                <td>
+                <DropdownButton title="Actions" id="bg-nested-dropdown">
+                    <Dropdown.Item eventKey="1">Finished</Dropdown.Item>
+                    <Dropdown.Item eventKey="2">Working</Dropdown.Item>
+                    <Dropdown.Item eventKey="3">Cancel task</Dropdown.Item>
+                    <Dropdown.Item eventKey="4">Delete</Dropdown.Item>
+                </DropdownButton>
+                </td>
+            </tr>
+        )
+    })
   return (
     <div className="container-fluid">
         <div className="App-header row">
@@ -110,18 +143,7 @@ render(){
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    </tr>
-                                   <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    </tr>
+                                    {activitiesList}
                                 </tbody>
                             </Table>
                         </div>
