@@ -35,13 +35,15 @@ class Login extends Component{
                 this.setState({
                     active : ""
                 })
+                console.log(res.data.token);
+                localStorage.setItem('token', res.data.token);
                 this.props.history.push({
                     pathname:"/todolist",
                     state:{
                         key: res.data
                     }
                 });
-                localStorage.setItem('token', res.data);
+                
             } 
         })
     }

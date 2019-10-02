@@ -36,19 +36,19 @@ class Todolist extends Component {
     }
 
     componentDidMount(){
-        const token = localStorage.getItem('token');
-        if(token && token.length > 10){
-        var token_var = this.props.location.state.key;
-        console.log(token_var.token);
+        const token_var = localStorage.getItem('token');
+        if(token_var && token_var.length > 10){
+        
+        console.log(token_var);
         this.setState({
-            token: token_var.token
+            token: token_var
         })
 
        axios({
             url: 'https://engine-staging.viame.ae/assessment/user/list',
             method: 'get',
             headers: {
-                'x-access-token' : token_var.token
+                'x-access-token' : token_var
             }
         })
      .then(response => {
