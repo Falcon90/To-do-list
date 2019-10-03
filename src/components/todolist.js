@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import logo from '../blue-logo.53ec088f.png';
 import './todolist.css';
-import { Button, ButtonToolbar, Table, DropdownButton, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Button, ButtonToolbar, Table, DropdownButton, Dropdown, ButtonGroup, Modal } from 'react-bootstrap';
 import axios from 'axios';
 
 class Todolist extends Component {
@@ -16,7 +16,8 @@ class Todolist extends Component {
     state = {
         name : "",
         token : "",
-        activities : []
+        activities : [],
+        show: 0
     }
 
     isAuthenticated(){
@@ -188,6 +189,20 @@ render(){
                 </div>
             </div>
         </div>
+        <Modal.Dialog show={this.state.show}>
+            <Modal.Header closeButton>
+                <Modal.Title>Modal title</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+                <p>Modal body text goes here.</p>
+            </Modal.Body>
+
+            <Modal.Footer>
+                <Button variant="secondary">Close</Button>
+                <Button variant="primary">Save changes</Button>
+            </Modal.Footer>
+        </Modal.Dialog>
     </div>
   );
 }
