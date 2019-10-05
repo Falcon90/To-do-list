@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import logo from '../blue-logo.53ec088f.png';
 import './todolist.css';
-import { Button, ButtonToolbar, Table, DropdownButton, Dropdown, ButtonGroup, Modal } from 'react-bootstrap';
+import { Button, ButtonToolbar, Table, DropdownButton, Dropdown, ButtonGroup, Form } from 'react-bootstrap';
 import axios from 'axios';
 
 class Todolist extends Component {
@@ -17,7 +17,9 @@ class Todolist extends Component {
         name : "",
         token : "",
         activities : [],
-        show: 0
+        show: 0,
+        taskName: "",
+        taskDesc: ""
     }
 
     isAuthenticated(){
@@ -67,6 +69,39 @@ class Todolist extends Component {
         });
     }
 
+    }
+
+    handleAddingTask = (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+        axios({
+            url: 'https://engine-staging.viame.ae/assessment/user/task',
+            data: { todolist: {title: this.state.taskName, description: this.state.taskDesc, status: 1} },
+            method: 'post',
+            headers: {
+                'x-access-token' : this.state.token
+            }
+        }).then(response => {
+            var new_act = this.state.activities.push(response.data);
+        this.setState({
+            activities: new_act
+        })
+        console.log(this.state.activities)
+     }).catch(err => {
+        console.log(err);
+     });
+    }
+
+    changeTaskName = (e) => {
+        this.setState({
+            taskName : e.target.value
+        })
+    }
+
+    changeTaskDesc = (e) => {
+        this.setState({
+            taskDesc : e.target.value
+        })
     }
 
     
@@ -165,8 +200,18 @@ render(){
                         <div className="col">
                         <ButtonToolbar className="toolbar">
                             <Button variant="primary" onClick={() => {this.logOut()}}>Logout</Button>
-                            <Button variant="primary">Add new task</Button>
                         </ButtonToolbar>
+                        <Form onSubmit={this.handleAddingTask} className="addTaskForm">
+                                <Form.Group>
+                                    <Form.Control type="text" id="taskName" placeholder="Task name" required onChange={this.changeTaskName}/>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Control type="text" id="taskDesc" placeholder="Description" required onChange={this.changeTaskDesc}/>
+                                </Form.Group>
+                                <Form.Group>
+                                <Button variant="primary" type="submit">Add new task</Button>
+                                </Form.Group>
+                            </Form>
                         </div>
                     </div>
                     <div className="row">
@@ -189,20 +234,6 @@ render(){
                 </div>
             </div>
         </div>
-        <Modal.Dialog show={this.state.show}>
-            <Modal.Header closeButton>
-                <Modal.Title>Modal title</Modal.Title>
-            </Modal.Header>
-
-            <Modal.Body>
-                <p>Modal body text goes here.</p>
-            </Modal.Body>
-
-            <Modal.Footer>
-                <Button variant="secondary">Close</Button>
-                <Button variant="primary">Save changes</Button>
-            </Modal.Footer>
-        </Modal.Dialog>
     </div>
   );
 }

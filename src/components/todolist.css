@@ -4,3 +4,9 @@
 .toolbar{
     margin-bottom: 10px;
 }
+
+.addTaskForm > .form-group{
+    width: 30%;
+    display: inline-block;
+    margin-right: 5px;
+}
