@@ -41,8 +41,6 @@ class Todolist extends Component {
     componentDidMount(){
         const token_var = localStorage.getItem('token');
         if(token_var && token_var.length > 10){
-        
-        //console.log(token_var);
         this.setState({
             token: token_var
         })
@@ -58,7 +56,6 @@ class Todolist extends Component {
         this.setState({
             activities: response.data
         })
-        console.log(this.state.activities)
      }) 
      .catch(err => {
         console.log(err);
@@ -87,7 +84,6 @@ class Todolist extends Component {
             taskName: "",
             taskDesc: ""
         })
-        console.log(this.state.activities)
      }).catch(err => {
         console.log(err);
      });
@@ -145,7 +141,6 @@ class Todolist extends Component {
                     return activity._id !== activity_id;
                 });
             }
-            console.log(temp_activities);
             this.setState({
                 activities: temp_activities
             })

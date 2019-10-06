@@ -26,7 +26,6 @@ class Register extends Component {
         e.preventDefault();
         axios.post(`https://engine-staging.viame.ae/assessment/users`, {users: {email: this.state.name, password: this.state.pass}})
         .then(res => {
-            console.log(res);
             this.setState({
                 success : "active",
                 error: ""
