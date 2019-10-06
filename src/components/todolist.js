@@ -42,7 +42,7 @@ class Todolist extends Component {
         const token_var = localStorage.getItem('token');
         if(token_var && token_var.length > 10){
         
-        console.log(token_var);
+        //console.log(token_var);
         this.setState({
             token: token_var
         })
@@ -73,7 +73,6 @@ class Todolist extends Component {
 
     handleAddingTask = (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
         axios({
             url: 'https://engine-staging.viame.ae/assessment/user/task',
             data: { todolist: {title: this.state.taskName, description: this.state.taskDesc, status: 1} },
@@ -82,9 +81,11 @@ class Todolist extends Component {
                 'x-access-token' : this.state.token
             }
         }).then(response => {
-            var new_act = this.state.activities.push(response.data);
+            this.state.activities.push(response.data);
         this.setState({
-            activities: new_act
+            activities: this.state.activities,
+            taskName: "",
+            taskDesc: ""
         })
         console.log(this.state.activities)
      }).catch(err => {
@@ -203,10 +204,10 @@ render(){
                         </ButtonToolbar>
                         <Form onSubmit={this.handleAddingTask} className="addTaskForm">
                                 <Form.Group>
-                                    <Form.Control type="text" id="taskName" placeholder="Task name" required onChange={this.changeTaskName}/>
+                                    <Form.Control type="text" id="taskName" placeholder="Task name" value={this.state.taskName} required onChange={this.changeTaskName}/>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Control type="text" id="taskDesc" placeholder="Description" required onChange={this.changeTaskDesc}/>
+                                    <Form.Control type="text" id="taskDesc" placeholder="Description" value={this.state.taskDesc} required onChange={this.changeTaskDesc}/>
                                 </Form.Group>
                                 <Form.Group>
                                 <Button variant="primary" type="submit">Add new task</Button>
