@@ -10,7 +10,7 @@ react -v: 16.10.1
      b-  yarn start <br>
 
 ### Description
-Its a simple To do list application developed using React and existing end points services.
-1- You can create an account.
-2- Login to your account.
-3- Create new tasks and change status of each task from the defaute one "created" to "Working", "Finished", "Canceled".
+Its a simple To do list application developed using React and existing end points services.<br>
+1- You can create an account.<br>
+2- Login to your account.<br>
+3- Create new tasks and change status of each task from the defaute one "created" to "Working", "Finished", "Canceled".<br>
