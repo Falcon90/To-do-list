@@ -1,6 +1,7 @@
 ### Live version  [https://todolist.mahmoud-ofeisa.com/]
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Environment
+react -v: 16.10.1 
 
 ## Available Scripts
 
