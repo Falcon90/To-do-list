@@ -5,7 +5,7 @@ react -v: 16.10.1
 
 ### To run the application locally
 1- download and unzip package<br>
-2- using command prompt run the following commands in the unziped folder:<br><br>
+2- using command prompt run the following commands in the unziped folder:<br>
      a-  yarn install <br>
      b-  yarn start <br>
 
