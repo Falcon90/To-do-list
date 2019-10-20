@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import logo from '../blue-logo.53ec088f.png';
+import logo from '../logo.png';
 import './todolist.css';
 import { Button, ButtonToolbar, Table, DropdownButton, Dropdown, ButtonGroup, Form } from 'react-bootstrap';
 import axios from 'axios';
@@ -17,7 +17,6 @@ class Todolist extends Component {
         name : "",
         token : "",
         activities : [],
-        show: 0,
         taskName: "",
         taskDesc: ""
     }

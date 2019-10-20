@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import logo from '../blue-logo.53ec088f.png';
+import logo from '../logo.png';
 import './register.css';
 import { Button, Form, Alert } from 'react-bootstrap';
 import { Link } from "react-router-dom";
