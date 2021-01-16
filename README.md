@@ -1,4 +1,3 @@
-### Live version  [https://todolist.mahmoud-ofeisa.com/]
 
 License: GPLv2 or later<br>
 License URI: https://www.gnu.org/licenses/gpl-2.0.html <br>
